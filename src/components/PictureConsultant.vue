@@ -1,6 +1,8 @@
 <template>
   <div class="picture-consultant-wrap">
-    <el-carousel height="150px">
+    <el-carousel
+      height="150px"
+    >
       <el-carousel-item v-for="item in 4" :key="item">
         <h3 class="small">{{ item }}</h3>
       </el-carousel-item>
@@ -16,7 +18,7 @@ export default {
 
 <style lang="stylus">
 .picture-consultant-wrap
-    margin 30px auto
+    margin 10px auto
 .el-carousel__item h3 {
     color: #475669;
     font-size: 14px;

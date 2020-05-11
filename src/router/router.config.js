@@ -17,7 +17,7 @@ export const navMenuRouters = {
         index: '2',
         component: () => import( /* webpackChunkName: "infomation" */ '../views/Information/')
     },
-    '旅游胜地': {
+    '旅游景点': {
         path: '/resort',
         name: 'Resort',
         index: '3',
@@ -29,24 +29,24 @@ export const navMenuRouters = {
         index: '4',
         component: () => import( /* webpackChunkName: "recommend" */ '../views/Recommend/')
     },
-    '在线客服': {
-        path: '/online',
-        name: 'Online',
-        index: '5',
-        component: () => import( /* webpackChunkName: "online" */ '../views/Online/')
+    // '在线客服': {
+    //     path: '/online',
+    //     name: 'Online',
+    //     index: '5',
+    //     component: () => import( /* webpackChunkName: "online" */ '../views/Online/')
 
-    },
+    // },
     '留言板': {
         path: '/comment',
         name: 'Comment',
-        index: '6',
+        index: '5',
         component: () => import( /* webpackChunkName: "comment" */ '../views/Comment/')
 
     },
     '管理登录': {
         path: '/administrator',
         name: 'Administrator',
-        index: '7',
+        index: '6',
         component: () => import( /* webpackChunkName: "administrator" */ '../views/Administrator/')
     }
 };

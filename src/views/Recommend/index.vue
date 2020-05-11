@@ -1,6 +1,12 @@
 <template>
   <div class="recommend">
       recommend
+      <quill-editor v-model="content"
+        ref="myQuillEditor"
+        :options="editorOption"
+        @blur="onEditorBlur($event)"
+        @focus="onEditorFocus($event)"
+        @ready="onEditorReady($event)" />
   </div>
 </template>
 
@@ -10,6 +16,14 @@
 
 export default {
   name: 'home',
+  data() {
+    return {
+      content: 'sssssssss',
+      editorOption: {
+        
+      }
+    }
+  },
   components: {
     // HelloWorld
   },
@@ -17,6 +31,17 @@ export default {
     this.$api.exampleModule.getExample().then(res => {
       console.log(res);
     })
-  }
+  },
+  methods: {
+    onEditorBlur(event) {
+      console.log(event, this.content);
+    },
+    onEditorFocus() {
+      console.log('focus');
+    },
+    onEditorReady() {
+      console.log('ready');
+    }
+  },
 }
 </script>
