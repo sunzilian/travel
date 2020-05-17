@@ -1,6 +1,6 @@
 <template>
   <div class="information">
-      <login-register />
+      <!-- <login-register /> -->
 
       <nav-menu
         activeIndex="2"
@@ -21,7 +21,7 @@
 // import HelloWorld from '@/components/HelloWorld.vue'
 
 import NavMenu from '../../components/NavMenu';
-import LoginRegister from '../../components/LoginRegister';
+// import LoginRegister from '../../components/LoginRegister';
 import TableConsultant from '../../components/TableConsultant';
 
 export default {
@@ -29,7 +29,7 @@ export default {
   components: {
     // HelloWorld
     NavMenu,
-    LoginRegister,
+    // LoginRegister,
     TableConsultant
   },
   mounted() {

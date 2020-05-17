@@ -79,7 +79,12 @@ export default {
         this.$refs[formName].validate((valid) => {
           console.log(valid, this);
           if (valid) {
-            alert('submit!');
+            // alert('submit!');
+            setTimeout(() => {
+              this.$router.push('home');
+              window.localStorage.setItem('userName', 'user')
+              window.localStorage.setItem('isLogin', true)
+            }, 1000);
           } else {
             console.log('error submit!!');
             return false;
@@ -96,12 +101,17 @@ export default {
 
 <style lang="stylus">
 .admin
-  width 100%
-  // margin-top 200px
-  display inline-block
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column
 
 .administrator-form
   width 30%
-  margin auto
   min-width 400px
 </style>

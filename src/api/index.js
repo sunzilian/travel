@@ -4,8 +4,10 @@
 
 // import your api module from ./modules, example:
 import exampleModule from './modules/example';
+import axios from './axios';
 
 export default {
   // your api modules，example:
-  exampleModule
+  exampleModule,
+  axios
 }

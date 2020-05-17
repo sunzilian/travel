@@ -11,6 +11,8 @@ axios.defaults.baseURL = process.env.VUE_APP_ServiceUrl;
 // 设置post请求的请求头
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8';
 
+// axios.defaults.withCredentials = true;
+
 // 2. 配置拦截器
 // 2.1 配置请求拦截器---在请求发出前进行拦截
 axios.interceptors.request.use(config => {

@@ -1,75 +1,105 @@
 <template>
-<div class="home-nav-wrapper">
-  <el-menu
-    class="home-nav"
-    :default-active="activeIndex"
-    mode="horizontal"
-    @select="handleSelect"
-    background-color="#002b49"
-    text-color="#fff"
-    active-text-color="#ffd04b"
-    router
-  >
-    <el-menu-item 
-      v-for="(item, index) in navMenu"
-      :key="item"
-      :index="(index + 1).toString()"
-      :route="navMenuRouters[item]"
+<div class="home-header">
+  <div class="home-nav-wrapper">
+    <el-menu
+      class="home-nav"
+      :default-active="activeIndex"
+      mode="horizontal"
+      @select="handleSelect"
+      background-color="#002b49"
+      text-color="#fff"
+      active-text-color="#ffd04b"
+      router
     >
-        {{item}}
-    </el-menu-item>
-  </el-menu>
+      <el-menu-item
+        v-for="(item, index) in navMenu"
+        :key="item"
+        :index="(index + 1).toString()"
+        :route="navMenuRouters[item]"
+      >
+        {{ item }}
+      </el-menu-item>
+    </el-menu>
+  </div>
+  <div  v-if="!isLogin" class="home-login-register">
+    <span @click="loginHandle">
+      [会员登录]
+    </span>
+    <span @click="registerHandle" style="margin-left: 15px">
+      [免费注册]
+    </span>
+  </div>
+  <div v-else class="home-login-register">
+    <span>
+      {{ userName }}
+    </span>
+    <span @click="signout" style="margin-left: 15px">
+      退出
+    </span>
+  </div>
 </div>
 </template>
 
 <script>
-import {navMenuRouters, navMenu} from '../router/router.config';
+import { navMenuRouters, navMenu } from "../router/router.config";
 
 export default {
-  name: 'navmenu',
+  name: "navmenu",
   props: {
     activeIndex: {
       type: String,
-      require: true
-    }
-  },
-  beforeCreate() {
-    console.log('beforeCreate  navmenu');
-  },
-  created() {
-    console.log('created  navmenu');
-  },
-  beforeMount() {
-    console.log('beforeMount  navmenu');
-  },
-  mounted() {
-    console.log('mounted  navmenu');
+      require: true,
+    },
   },
   data() {
+    let userName = window.localStorage.getItem('userName');
+    let isLogin = window.localStorage.getItem('isLogin');
     return {
+      userName,
+      isLogin,
       // activeIndex: "2",
       // activeIndex2: "1",
       navMenuRouters,
-      navMenu
+      navMenu,
     };
   },
   methods: {
     handleSelect(key, keyPath) {
       console.log(key, keyPath);
+    },
+    loginHandle() {
+      this.$router.push('administrator');
+    },
+    registerHandle() {
+      this.$router.push('register')
+    },
+    signout() {
+      window.localStorage.clear();
+      window.location.reload();
     }
-  }
+  },
 };
 </script>
 
 <style lang="stylus">
-.home-nav-wrapper
+
+.home-header
   width 100%
+  display flex
+  align-items center
   background-color #002b49
-  vertical-align middle
+
+.home-login-register
+  width 18%
+  color #e79042
+  text-align right
+
+
+.home-nav-wrapper
+  width 80%
   .home-nav
     margin auto
     width 80%
-    background-color #002b49
   .el-menu.el-menu--horizontal
     border-bottom none
 </style>
