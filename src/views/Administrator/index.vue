@@ -70,26 +70,34 @@ export default {
     // HelloWorld
   },
   mounted() {
-    this.$api.exampleModule.getExample().then(res => {
-      console.log(res);
-    });
+    // this.$api.exampleModule.getExample().then(res => {
+    //   console.log(res);
+    // });
   },
   methods: {
       submitForm(formName) {
         this.$refs[formName].validate((valid) => {
-          console.log(valid, this);
+          console.log(this.administratorForm, 8888777);
           if (valid) {
-            // alert('submit!');
-            setTimeout(() => {
-              this.$router.push('home');
-              window.localStorage.setItem('userName', 'user')
-              window.localStorage.setItem('isLogin', true)
-            }, 1000);
-          } else {
-            console.log('error submit!!');
-            return false;
+            let {username, pass} = this.administratorForm;
+            this.$api.get({
+              url: '/user/login',
+              data: {
+                userAccount: username,
+                userpwd: pass
+              }
+            }).then(({success, data: {nickName, token}}) => {
+              // console.log(res,222);
+              if (success) {
+                this.$router.push('home');
+                window.localStorage.setItem('userName', nickName)
+                window.localStorage.setItem('token', token)
+                window.localStorage.setItem('isLogin', true)
+              }
+            }, rej => {
+              console.log(rej, 333);
+            })
           }
-          // this.errorMessage="错误提示"
         });
       },
       resetForm(formName) {

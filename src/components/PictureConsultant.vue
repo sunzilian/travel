@@ -12,7 +12,26 @@
 
 <script>
 export default {
-    
+  data() {
+    return {
+      newsList: []
+    }
+  },
+  created() {
+    this.$api.get({
+      url: '/news/getTopNews',
+      data: {}
+    }).then(({success, msg, data}) => {
+      if (success) {
+        console.log('getNewsTop', data);
+      }
+      else {
+        this.$message.error(msg)
+      }
+    }, error => {
+        this.$message.error(error)
+    })
+  }
 }
 </script>
 

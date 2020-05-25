@@ -30,6 +30,29 @@ const routes = [
     // which is lazy-loaded when the route is visited.
     component: () => import( /* webpackChunkName: "register" */ '../views/Register/')
   },
+  {
+    path: '/mycenter',
+    name: 'mycenter',
+    component: () => import(/* webpackChunkName: "mycenter" */ '../views/MyCenter'),
+    children: [
+      {
+        name: 'mycollection',
+        path: 'mycollection',
+          component: () => import( /* webpackChunkName: "myCollection" */ '../views/MyCenter/myCollection.vue')
+      },
+      {
+        name: 'mycommet',
+        path: 'mycomment',
+        component: () => import( /* webpackChunkName: "myCommet" */ '../views/MyCenter/myCommet.vue')
+      },
+      {
+        name: 'myinfo',
+        path: 'myinfo',
+        // component: () => import( /* webpackChunkName: "myInfo" */ '../views/MyCenter/myInfo.vue')
+        component: () => import( /* webpackChunkName: "myInfo" */ '../views/Register/index.vue')
+      }
+    ]
+  },
   ...routerList
 ]
 

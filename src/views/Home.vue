@@ -16,9 +16,9 @@ export default {
     // HelloWorld
   },
   mounted() {
-    this.$api.exampleModule.getExample().then(res => {
-      console.log(res);
-    })
+    // this.$api.exampleModule.getExample().then(res => {
+    //   console.log(res);
+    // })
   }
 }
 </script>

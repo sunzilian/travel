@@ -14,7 +14,7 @@
           {{item.name}}
         </span>
       </div>
-      <div class="resort-key-search-wrapper">
+      <!-- <div class="resort-key-search-wrapper">
         <el-form :inline="true" :model="resortSearch" class="resort-search-form">
           <el-form-item label="关键词">
             <el-input v-model="resortSearch.key" placeholder="请输入关键词"></el-input>
@@ -23,7 +23,7 @@
             <el-button type="primary"  @click="onSubmit" >查询</el-button>
           </el-form-item>
         </el-form>
-      </div>
+      </div> -->
       <div class="resort-main-list">
         <div
           v-for="item in resortMainList"

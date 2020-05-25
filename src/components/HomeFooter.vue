@@ -28,7 +28,7 @@
 import { navMenuRouters, navMenu } from "../router/router.config";
 
 export default {
-  name: "footer",
+  name: "homeFooter",
   props: {
     activeIndex: {
       type: String,

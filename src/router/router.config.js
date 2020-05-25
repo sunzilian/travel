@@ -42,12 +42,12 @@ export const navMenuRouters = {
         index: '5',
         component: () => import( /* webpackChunkName: "comment" */ '../views/Comment/')
 
-    },
-    '管理登录': {
-        path: '/administrator',
-        name: 'Administrator',
-        index: '6',
-        component: () => import( /* webpackChunkName: "administrator" */ '../views/Administrator/')
+    // },
+    // '管理登录': {
+    //     path: '/administrator',
+    //     name: 'Administrator',
+    //     index: '6',
+    //     component: () => import( /* webpackChunkName: "administrator" */ '../views/Administrator/')
     }
 };
 export const navMenu = Object.keys(navMenuRouters);

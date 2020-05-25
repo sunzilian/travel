@@ -1,6 +1,6 @@
 <template>
   <div class="register">
-    <h3>
+    <h3 v-if="isRegitster">
       欢迎注册网站会员
     </h3>
     <el-form
@@ -11,6 +11,13 @@
       label-width="100px"
       class="register-form"
     >
+      <el-form-item label="账号" prop="account">
+        <el-input
+          type="text"
+          v-model="registerForm.account"
+          autocomplete="off"
+        ></el-input>
+      </el-form-item>
       <el-form-item label="用户名" prop="username">
         <el-input
           type="text"
@@ -33,23 +40,24 @@
         ></el-input>
       </el-form-item>
       <el-form-item label="性别">
-        <el-radio v-model="registerForm.sex" label="1">男</el-radio>
-        <el-radio v-model="registerForm.sex" label="2">女</el-radio>
+        <el-radio v-model="registerForm.sex" :label="true">男</el-radio>
+        <el-radio v-model="registerForm.sex" :label="false">女</el-radio>
       </el-form-item>
       <el-form-item label="喜好">
-        <el-radio v-model="registerForm.hobbit" label="1">购物</el-radio>
-        <el-radio v-model="registerForm.hobbit" label="2">旅游</el-radio>
+        <!-- <el-radio v-model="registerForm.love" label="1">购物</el-radio>
+        <el-radio v-model="registerForm.love" label="2">旅游</el-radio> -->
+        <el-radio v-for="item in registerForm.loveList" :key="item.id" v-model="registerForm.love" :label="item.id">{{item.name}}</el-radio>
       </el-form-item>
       <el-form-item label="手机" prop="phone">
         <el-input v-model="registerForm.phone" autocomplete="off"></el-input>
       </el-form-item>
-      <el-form-item label="邮箱" prop="email">
+      <!-- <el-form-item label="邮箱" prop="email">
         <el-input
           type="email"
           v-model="registerForm.email"
           autocomplete="off"
         ></el-input>
-      </el-form-item>
+      </el-form-item> -->
       <el-form-item>
         <el-button type="primary" @click="submitForm('registerForm')"
           >提交</el-button
@@ -112,11 +120,13 @@ export default {
     };
     return {
       registerForm: {
+        account: '',
         username: '',
         pass: '',
         checkPass: '',
         sex: '1',
-        hobbit: '1',
+        loveList: [],
+        love: '',
         phone: '',
         email: ''
       },
@@ -128,25 +138,70 @@ export default {
         email: [
             { type: 'email', message: '请输入正确的邮箱地址', trigger: 'blur' }
           ]
-      }
+      },
+      isRegitster: this.$route.query.isRegitster
     };
   },
   components: {
     // HelloWorld
   },
+  created() {
+    if (!this.isRegitster) {
+      this.$api.get({
+        url: '/user/getUser',
+        data: {id: 1}
+      })
+      .then(({success, data}) => {
+        console.log(data);
+        if (success) {
+          console.log(data);
+          // this.registerForm = data;
+          this.$set(this.registerForm, 'sex', data.sex)
+          this.$set(this.registerForm, 'account', data.account)
+          this.$set(this.registerForm, 'love', data.love)
+          this.$set(this.registerForm, 'pass', data.password)
+          this.$set(this.registerForm, 'username', data.nickName)
+        }
+      })
+    }
+    setTimeout(() => {
+      this.$api.get({
+        url: '/scenicspotType/getList',
+        data: {}
+      })
+      .then(({success, data}) => {
+        console.log(data);
+        if (success) {
+          this.registerForm.loveList = data;
+        }
+      })
+    },);
+  },
   mounted() {
-    this.$api.exampleModule.getExample().then(res => {
-      console.log(res);
-    });
+    // this.$api.exampleModule.getExample().then(res => {
+    //   console.log(res);
+    // });
   },
   methods: {
       submitForm(formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
-            alert('submit!');
-            console.log(valid, this.registerForm);
+            console.log(valid, this.registerForm, 76446);
+            this.$api.post({
+              url: '/user/register',
+              data: this.registerForm
+            }).then(({success, msg}) => {
+              if (success) {
+                this.$router.push('administrator');
+              }
+              else {
+                this.$message.error(msg)
+              }
+            }, ({msg}) => {
+              this.$message.error(msg)
+            })
           } else {
-            console.log('error submit!!');
+            this.$message.error('请检查下各项信息')
             return false;
           }
         });
@@ -158,8 +213,11 @@ export default {
 };
 </script>
 
-<style lang="stylus">
+<style lang="stylus" scoped>
+.register
+  width 100%
 .register-form
   width 40%
   margin 30px auto
+  overflow hidden
 </style>

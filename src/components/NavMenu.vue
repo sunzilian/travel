@@ -30,7 +30,7 @@
     </span>
   </div>
   <div v-else class="home-login-register">
-    <span>
+    <span @click="mycenter">
       {{ userName }}
     </span>
     <span @click="signout" style="margin-left: 15px">
@@ -51,16 +51,23 @@ export default {
       require: true,
     },
   },
-  data() {
+  data() {console.log(navMenu);
     let userName = window.localStorage.getItem('userName');
     let isLogin = window.localStorage.getItem('isLogin');
+    let newnavMenu = navMenu.filter(item => {
+      if (isLogin) {
+        return true
+      }
+      return item !== '个性推荐'
+    })
+    console.log(newnavMenu);
     return {
       userName,
       isLogin,
       // activeIndex: "2",
       // activeIndex2: "1",
       navMenuRouters,
-      navMenu,
+      navMenu: newnavMenu,
     };
   },
   methods: {
@@ -72,6 +79,9 @@ export default {
     },
     registerHandle() {
       this.$router.push('register')
+    },
+    mycenter() {
+      this.$router.push('mycenter')
     },
     signout() {
       window.localStorage.clear();

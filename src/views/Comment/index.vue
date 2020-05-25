@@ -77,11 +77,31 @@ export default {
     // HelloWorld
     NavMenu
   },
-  mounted() {
-    this.$api.exampleModule.getExample().then(res => {
-      console.log(res);
-    });
+  created() {
+    if (!window.localStorage.getItem('isLogin')) {
+      this.$message.warning('请先去登录')
+      this.$router.push('/home')
+      return;
+    }
+    this.$api.get({
+      url: '/news/getTopNews',
+      data: {}
+    }).then(({success, msg, data}) => {
+      if (success) {
+        console.log('getNewsTop', data);
+      }
+      else {
+        this.$message.error(msg)
+      }
+    }, error => {
+        this.$message.error(error)
+    })
   },
+  // mounted() {
+  //   this.$api.exampleModule.getExample().then(res => {
+  //     console.log(res);
+  //   });
+  // },
   methods: {
     comfirmHandle() {
       let {
