@@ -27,7 +27,9 @@ export const navMenuRouters = {
         path: '/recommend',
         name: 'Recommend',
         index: '4',
-        component: () => import( /* webpackChunkName: "recommend" */ '../views/Recommend/')
+        query: {isRecommend: true},
+        // component: () => import( /* webpackChunkName: "recommend" */ '../views/Recommend/')
+        component: () => import( /* webpackChunkName: "resort" */ '../views/Resort/')
     },
     // '在线客服': {
     //     path: '/online',

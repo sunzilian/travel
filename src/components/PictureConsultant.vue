@@ -3,8 +3,9 @@
     <el-carousel
       height="150px"
     >
-      <el-carousel-item v-for="item in 4" :key="item">
-        <h3 class="small">{{ item }}</h3>
+      <el-carousel-item v-for="item in newsList" :key="item.name">
+        <!-- <h3 class="small">{{ item }}</h3> -->
+        <img :src="item.picture" alt="" width="100%">
       </el-carousel-item>
     </el-carousel>
   </div>
@@ -23,7 +24,8 @@ export default {
       data: {}
     }).then(({success, msg, data}) => {
       if (success) {
-        console.log('getNewsTop', data);
+        console.log('getNewsTop， pic', data);
+        this.newsList = data;
       }
       else {
         this.$message.error(msg)

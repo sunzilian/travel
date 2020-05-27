@@ -23,6 +23,12 @@ const routes = [
     component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
   },
   {
+    path: '/administrator',
+    name: 'Administrator',
+    index: '6',
+    component: () => import( /* webpackChunkName: "administrator" */ '../views/Administrator/')
+  },
+  {
     path: '/register',
     name: 'Register',
     // route level code-splitting
@@ -52,6 +58,12 @@ const routes = [
         component: () => import( /* webpackChunkName: "myInfo" */ '../views/Register/index.vue')
       }
     ]
+  },
+  {
+    path: '/detail',
+    name: 'Detail',
+    component: () => import( /* webpackChunkName: "detail" */ '../components/Detail')
+    // component: () => import( /* webpackChunkName: "register" */ '../views/Register/')
   },
   ...routerList
 ]

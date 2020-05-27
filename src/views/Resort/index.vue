@@ -4,12 +4,13 @@
       <nav-menu
         activeIndex="3"
       />
-      <div class="resort-title">旅游景点</div>
-      <div class="resort-keys-list">
+      <div class="resort-title">{{isRecommend ? '根据您的喜好推荐景点' : '旅游景点'}}</div>
+      <div v-show="!isRecommend" class="resort-keys-list">
         <span
           class="resort-keys-item"
           v-for="item in resortKeysList"
           :key="item.name"
+          @click="resortKeyHandle"
         >
           {{item.name}}
         </span>
@@ -27,13 +28,22 @@
       <div class="resort-main-list">
         <div
           v-for="item in resortMainList"
-          :key="item.title"
+          :key="item.name"
           class="resort-main-list-item"
         >
-          <img :src="item.imgUrl" :alt="item.title">
-          <span>{{item.title}} {{item.price}}</span>
+          <img :src="item.picture" :alt="item.name">
+          <span>{{item.name}} {{item.price}}</span>
         </div>
       </div>
+      <el-pagination
+        @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"
+        :current-page="currentPage"
+        :page-sizes="PAGE_SIZE"
+        :page-size="pageSize"
+        layout="sizes, total, prev, pager, next, jumper"
+        :total="total">
+      </el-pagination>
   </div>
 </template>
 
@@ -63,36 +73,36 @@ const resortKeysList = [
   }
 ];
 const resortMainList = [
-  {
-    title: '泰国曼谷',
-    price: '180',
-    imgUrl: 'http://xm.visitxm.com/userfiles/image/g1(1).jpg'
-  },
-  {
-    title: '南京总统府',
-    price: '180',
-    imgUrl: 'http://www.visitxm.com/userfiles/image/21437ea9-2804-44de-99a6-d4e9e84ea13f.jpg'
-  },
-  {
-    title: '拙政园',
-    price: '180',
-    imgUrl: 'http://www.visitxm.com/tpImagesUpload/3/v01.jpg'
-  },
-  {
-    title: '承德避暑山庄',
-    price: '180',
-    imgUrl: 'http://www.visitxm.com/tpImagesUpload/3/%E3%80%8A%E7%82%AE%E5%8F%B0%E5%85%A8%E6%99%AF%E3%80%8B-15362220729.jpg'
-  },
-  {
-    title: '夫子庙-秦淮风光带',
-    price: '10',
-    imgUrl: 'http://xm.visitxm.com/userfiles/image/g1(1).jpg'
-  },
-  {
-    title: '泰国曼谷1',
-    price: '180',
-    imgUrl: 'http://www.visitxm.com/tpImagesUpload/3/v01.jpg'
-  }
+  // {
+  //   name: '泰国曼谷',
+  //   price: '180',
+  //   picture: 'http://xm.visitxm.com/userfiles/image/g1(1).jpg'
+  // },
+  // {
+  //   name: '南京总统府',
+  //   price: '180',
+  //   picture: 'http://www.visitxm.com/userfiles/image/21437ea9-2804-44de-99a6-d4e9e84ea13f.jpg'
+  // },
+  // {
+  //   name: '拙政园',
+  //   price: '180',
+  //   picture: 'http://www.visitxm.com/tpImagesUpload/3/v01.jpg'
+  // },
+  // {
+  //   name: '承德避暑山庄',
+  //   price: '180',
+  //   picture: 'http://www.visitxm.com/tpImagesUpload/3/%E3%80%8A%E7%82%AE%E5%8F%B0%E5%85%A8%E6%99%AF%E3%80%8B-15362220729.jpg'
+  // },
+  // {
+  //   name: '夫子庙-秦淮风光带',
+  //   price: '10',
+  //   picture: 'http://xm.visitxm.com/userfiles/image/g1(1).jpg'
+  // },
+  // {
+  //   name: '泰国曼谷1',
+  //   price: '180',
+  //   picture: 'http://www.visitxm.com/tpImagesUpload/3/v01.jpg'
+  // }
 ];
 export default {
   name: 'resort',
@@ -102,20 +112,101 @@ export default {
       resortMainList,
       resortSearch: {
         key: ''
-      }
+      },
+      currentPage: 1,
+      pageSize: 10,
+      total: 20,
+      PAGE_SIZE: [10, 50, 100, 200],
+      isRecommend: this.$route.query.isRecommend
     }
   },
   components: {
     NavMenu
   },
+  created() {
+    let isRecommend = this.isRecommend
+    if (!isRecommend) {
+      this.getScenicspotNewsPage()
+      this.getScenicspotTypeList()
+    }
+    else {
+      this.getTopScenicspot()
+    }
+  },
   mounted() {
     this.$api.exampleModule.getExample().then(res => {
       console.log(res);
     })
+    console.log(this.$route.query);
   },
   methods: {
     onSubmit() {
       console.log('submit!', this.resortSearch.key);
+    },
+    resortKeyHandle(type) {
+      console.log(type);
+      this.getScenicspotNewsPage(type)
+    },
+    getTopScenicspot() {
+      this.$api.get({
+        url: '/scenicspot/getTopScenicspot',
+        data: {}
+      }).then(({success, msg, data}) => {
+        if (success) {
+          console.log('gettopNewsssssss', data);
+          this.resortMainList = data;
+          this.total = data.length || 10
+        }
+        else {
+          this.$message.error(msg)
+        }
+      }, error => {
+          this.$message.error(error)
+      })
+    },
+    getScenicspotNewsPage( type='0') {
+      let {pageSize, currentPage} = this;
+      this.$api.get({
+        url: '/scenicspot/getNewsPage',
+        data: {
+          pageSize,
+          pageIndex: currentPage,
+          type
+        }
+      }).then(({success, msg, data}) => {
+        if (success) {
+          console.log('getNewsssssss', data);
+          this.resortMainList = data.records;
+          this.total = data.records.length || 10
+        }
+        else {
+          this.$message.error(msg)
+        }
+      }, error => {
+          this.$message.error(error)
+      })
+    },
+    getScenicspotTypeList() {
+      this.$api.get({
+        url: '/scenicspotType/getList',
+        data: {}
+      })
+      .then(({success, data}) => {
+        console.log(data);
+        if (success) {
+          this.resortKeysList = data;
+        }
+      })
+    },
+    handleSizeChange(pageSize) {
+      console.log(pageSize, 222);
+      this.pageSize = pageSize
+      // this.$router.replace({query: { ...this.query, pageSize, currentPage: 1 }})
+    },
+    handleCurrentChange(currentPage) {
+      console.log(currentPage, 3333);
+      this.currentPage = currentPage
+      // this.$router.replace({query: { ...this.query, currentPage }})
     }
   },
 }

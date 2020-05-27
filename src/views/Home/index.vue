@@ -8,6 +8,16 @@
     <div class="home-main-pic"></div>
 
     <consultant-wrapper />
+    <div class="home-pic-list">
+      <div
+        v-for="(item, index) in [1, 2, 3, 4, 5, 7, 8, 6]"
+        :key="index"
+        class="home-pic-list-item"
+      >
+        <img src="http://xm.visitxm.com/userfiles/image/g1(1).jpg" alt="">
+        <span>泰国曼谷</span>
+      </div>
+    </div>
     <home-footer />
   </div>
 </template>
@@ -31,6 +41,7 @@ export default {
     homeFooter
   },
   mounted() {
+    this.$api.axios()
     this.$api.get({
       url: '/news/getNewsPage',
       data: {
@@ -46,16 +57,10 @@ export default {
       url: '/comment/addComment',
       data: {
         comment: {
-          answerContext: "生生世世发发发",
-          answerDate: "2020-05-23T09:57:26.104Z",
-          context: "string",
-          createDate: "2020-05-23T09:57:26.104Z",
-          detected: true,
-          id: 0,
-          status: 0,
-          title: "是生生世世",
-          userId: 0
-          }
+          context: "暑假想去木兰围场,不知道需要准备多少钱",
+          title: "咨询下木兰围场的费用问题",
+          userId: 1
+        }
       }
     }).then(res => {
       console.log(res,222);
@@ -75,5 +80,20 @@ export default {
     // width 180px
     height 340px
     background-image url(../../assets/bpic.jpg);
+  
+  .home-pic-list
+    width 96%
+    margin auto
+    display flex
+    flex-wrap wrap
+    justify-content space-between
+    align-items center
+
+    &-item
+      // width 23%
+      flex  0 23%
+
+      img
+        width 100%
 
 </style>

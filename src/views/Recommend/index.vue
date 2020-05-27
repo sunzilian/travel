@@ -1,12 +1,12 @@
 <template>
   <div class="recommend">
       recommend
-      <quill-editor v-model="content"
+      <!-- <quill-editor v-model="content"
         ref="myQuillEditor"
         :options="editorOption"
         @blur="onEditorBlur($event)"
         @focus="onEditorFocus($event)"
-        @ready="onEditorReady($event)" />
+        @ready="onEditorReady($event)" /> -->
   </div>
 </template>
 
@@ -31,6 +31,7 @@ export default {
     this.$api.exampleModule.getExample().then(res => {
       console.log(res);
     })
+    console.log(this.$route);
   },
   methods: {
     onEditorBlur(event) {
