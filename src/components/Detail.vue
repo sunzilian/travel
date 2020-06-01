@@ -1,17 +1,31 @@
 <template>
-  <div v-html="content">
-    {{content}}
+  <div class="detail-wrapper" style="with:100%">
+    <nav-menu
+      activeIndex="3"
+    />
+    <h1>{{title}}</h1>
+    <div v-html="content" style="text-algin:center;max-width: 700px;margin: auto">
+      {{content}}
+    </div>
   </div>
+  
 </template>
 
 <script>
+// import NavMenu from '../../components/NavMenu';
+import NavMenu from './NavMenu.vue'
+
 export default {
+  components: {
+    NavMenu
+  },
   data() {
     return {
-      // content: "<p><span style=\"font-size: 16px;\">在经历了多年的传言之后，国内餐饮业巨头海底捞上市终于迎来实质性动作。5月17日晚间，海底捞在开曼群岛注册的海底捞国际控股公司向港交所递交了招股书。</span></p><p><span style=\"font-size: 16px;\">透过海底捞招股书可见，海底捞IPO不仅能让公司创始人获益匪浅，也揭开了海底捞董事长张勇背后的资本帝国，同时，依靠“一锅红汤”而不断壮大的企业也浮出水面。</span></p><p><span style=\"font-size: 16px;\">张勇的资本帝国</span></p><p><span style=\"font-size: 16px;\"><img src=\"https://hdl-emas-app-bucket.oss-cn-beijing.aliyuncs.com/app/news/image/ffe009c3e57d40cf8ab0b45e940b89e7-340-228.png\"><img src=\"https://hdl-emas-app-bucket.oss-cn-beijing.aliyuncs.com/app/news/image/36ce572fa16d4d7f8a6fcccc8dd08df2-340-228.png\"></span></p><p><span style=\"font-size: 16px;\">彼时，1994年，海底捞董事长张勇和他的小伙伴们，四个人合伙在四川省简阳市创办了一家名为“海底捞火锅城”的火锅店，那时火锅店里只有四张桌子。</span></p><p><span style=\"font-size: 16px;\">如今，海底捞在招股书中公布，目前运营的餐厅数量达到了320家，包括中国内地的296家餐厅以及24家位于中国台湾、中国香港以及海外在新加坡、韩国、日本及美国的餐厅。</span></p><p><span style=\"font-size: 16px;\">海底捞还表示，上市募集资金后，海底捞计划将募资的60%用于扩张，20%拟用于研发和实施新技术，15%拟用于还贷，5%作为一般营运资金使用。</span></p><p><span style=\"font-size: 16px;\">伴随着海底捞招股书的面世，公司掌门人张勇的资本帝国也浮出水面。虽然这是海底捞首次上市，但与之有关联的两家公司早已涉足资本市场。一家是颐海国际，另一家是优鼎优。</span></p><p><span style=\"font-size: 16px;\">2016年，作为海底捞底料独家供应商的颐海国际登陆香港交易所；2017年，海底捞旗下冒菜品牌优鼎优登陆新三板。</span></p><p><span style=\"font-size: 16px;\">资料显示，颐海国际的实际控制人是张勇夫妇，直接持股35.59%，并通过合计持股68%的静远投资间接持有颐海国际50%的股份。颐海国际的现任董事长施永宏乃张勇海底捞的合伙创始人。</span></p><p><span style=\"font-size: 16px;\">据公司年报显示，火锅底是料颐海国际主要的收入来源，占全年收入的79%。</span></p>"
-      content: '',
+      content: '<p>入夏以来，全国多地的气温提前开启了“火爆模式”。华强方特集团旗下位于<span class="link"><a href="/travel-scenic-spot/mafengwo/10794.html" target="_blank">郑州</a></span>、<span class="link"><a href="/travel-scenic-spot/mafengwo/10132.html" target="_blank">厦门</a></span>、<span class="link"><a href="/travel-scenic-spot/mafengwo/10803.html" target="_blank">芜湖</a></span>的方特水上乐园将陆续欢乐回归，为广大游客送上酷爽清凉的夏日游玩体验。</p><p><br><p class="pcenter"><img src="http://n1-q.mafengwo.net/s16/M00/4F/1F/CoUBUl7PUVmABux9AAePKP-kkuE161.png?imageView2%2F2%2Fw%2F2000%2Fh%2F600%2Fq%2F90" class="replace-file-img"></p></p><p class="MsoNormal" style="margin: 0cm 0cm 0.0001pt; text-align: justify; font-size: 10.5pt; font-family: Calibri; caret-color: rgb(0, 0, 0); color: rgb(0, 0, 0); text-indent: 24pt; line-height: 21px;"><span style="font-size: 12pt; line-height: 24px; font-family: 宋体;"></span></p><p><br></p><p><strong>超凡体验项目助力游客畅快玩水</strong></p><p>方特旗下<span class="link"><a href="/travel-scenic-spot/mafengwo/10794.html" target="_blank">郑州</a></span>方特水上乐园、<span class="link"><a href="/travel-scenic-spot/mafengwo/10132.html" target="_blank">厦门</a></span>方特水上乐园和<span class="link"><a href="/travel-scenic-spot/mafengwo/10803.html" target="_blank">芜湖</a></span>方特水上乐园将分别于5月30日、6月6日和6月19日开业。<span lang="EN-US" style="font-size: 12pt; line-height: 24px;"><o:p></o:p></span></p><p><br><p class="pcenter"><img src="http://b1-q.mafengwo.net/s16/M00/4F/3D/CoUBUl7PUXOAfIANAAvFgZf11mo020.png?imageView2%2F2%2Fw%2F2000%2Fh%2F600%2Fq%2F90" class="replace-file-img"></p></p><p class="MsoNormal" style="margin: 0cm 0cm 0.0001pt; text-align: justify; font-size: 10.5pt; font-family: Calibri; caret-color: rgb(0, 0, 0); color: rgb(0, 0, 0); text-indent: 24pt; line-height: 21px;"><span style="font-size: 12pt; line-height: 24px; font-family: 宋体;"></span></p><p>&nbsp;<br><p class="pcenter"><img src="http://n1-q.mafengwo.net/s16/M00/4F/61/CoUBUl7PUZKAQHh9AA84D093QjQ890.png?imageView2%2F2%2Fw%2F2000%2Fh%2F600%2Fq%2F90" class="replace-file-img"></p></p><p><br></p><p>方特水上乐园拥有多项曾获得国际行业旅游协会最佳水上设备奖的主流精品项目。其中，“熊出没”IP主题项目《熊出没水寨》拥有水枪对战区、水上浮桥、水炮喷淋区等多种戏水区域，是小朋友的欢乐天地；明星项目《大喇叭》激爽刺激，深受年轻人的喜爱；还有轻松休闲的《懒人河》，全家人都能畅享徜徉在热带雨林与极地冰雪之间的美妙乐趣。在方特水上乐园，无论是和朋友、恋人还是家人，都能一起畅享清凉，体验别具一格的戏水乐趣。</p><p><br></p><p>除了好玩有趣的水上项目，方特水上乐园还将在开业后推出活力四射的主题演出。届时，游客们不仅能欣赏精彩的主题文化活动，还能参与“水上电音派对”等丰富活动，在激荡的浪花和动感的音乐声中畅享夏日水狂欢。<span lang="EN-US" style="font-size: 12pt; line-height: 24px;"><o:p></o:p></span></p><p><br><p class="pcenter"><img src="http://n1-q.mafengwo.net/s16/M00/4F/85/CoUBUl7PUa2ALtcbAAkjuRLzhJ0722.png?imageView2%2F2%2Fw%2F2000%2Fh%2F600%2Fq%2F90" class="replace-file-img"></p></p><p class="MsoNormal" style="margin: 0cm 0cm 0.0001pt; text-align: justify; font-size: 10.5pt; font-family: Calibri; caret-color: rgb(0, 0, 0); color: rgb(0, 0, 0); text-indent: 24pt; line-height: 21px;"><span style="font-size: 12pt; line-height: 24px; font-family: 宋体;"></span></p><p><br></p><p><strong>严格消毒&nbsp;创造安心游玩环境</strong></p><p>方特主题乐园始终将游客的健康与安全放在首位。为了贯彻落实有关部门关于旅游景区有序开放准备工作的指导指示，各地方特水上乐园均针对复园后的各项接待工作推出了一系列防控措施，将以实名游园、体温检测、客流控制、无接触游园、间隔排队等多重举措，切实保证每一名游客放心游玩，开心体验。<o:p></o:p></p><p><br></p><p>同时，方特水上乐园还以高标准保障水上项目、公共区域、餐饮场所等设施的清洁卫生。园区不仅将严格保证所有体验区的水质，还准备了充足的消毒物资与配套措施，对公共空间开展进行高频次消毒，在开园后还将对游客使用过的皮筏、滑毯等水上游乐用具严格执行“一客一消毒”流程，对用具进行彻底酒精消毒后再投入使用。<o:p></o:p></p><p><br></p><p>此外，为了优化游园舒适度，方特水上乐园不断升级园内的遮阳和降温设施。今年三座方特水上乐园将在项目排队区增设遮阳设施，并将在多个主干道旁增设“雾森”系统，营造更为清凉、舒适的室外游玩环境。<span lang="EN-US" style="font-size: 12pt; line-height: 24px;"><o:p></o:p></span></p><p><br><p class="pcenter"><img src="http://b1-q.mafengwo.net/s16/M00/4F/BD/CoUBUl7PUdOANTf1AAygqo8oSb8825.png?imageView2%2F2%2Fw%2F2000%2Fh%2F600%2Fq%2F90" class="replace-file-img"></p></p><p class="MsoNormal" style="margin: 0cm 0cm 0.0001pt; text-align: justify; font-size: 10.5pt; font-family: Calibri; caret-color: rgb(0, 0, 0); color: rgb(0, 0, 0); text-indent: 24pt; line-height: 21px;"><span style="font-size: 12pt; line-height: 24px; font-family: 宋体;"></span></p><p><br></p><p>随着方特水上乐园陆续开业，方特旗下全系列主题乐园也将实现全面开业运营。无论是打卡经典项目，还是体验多彩文化，或是畅享玩水乐趣，广大游客都将在方特主题乐园收获高品质游乐体验，畅享欢乐夏天。</p><p class="MsoNormal" style="margin: 0cm 0cm 0.0001pt; text-align: justify; font-size: 10.5pt; font-family: Calibri; caret-color: rgb(0, 0, 0); color: rgb(0, 0, 0); text-indent: 24pt; line-height: 21px;"><span lang="EN-US" style="font-size: 12pt; line-height: 24px;"><o:p></o:p></span></p>',
+      // content: '',
       type: this.$route.query.type,
-      id: this.$route.query.id
+      id: this.$route.query.id,
+      title: '酷爽一夏 方特水上乐园清凉回归 '
     }
   },
   created() {
@@ -57,3 +71,16 @@ export default {
   }
 }
 </script>
+
+<style lang="stylus">
+.detail-wrapper
+  text-align center
+  // background-color #fff
+
+  p
+    max-width 700px
+
+img.replace-file-img
+  width 600px
+  height 300px
+</style>

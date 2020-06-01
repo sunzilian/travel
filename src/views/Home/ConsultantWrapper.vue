@@ -14,8 +14,8 @@
       <div class="csl-title">站内公告</div>
       <div class="quee">
         <ul class="csl-notice-list">
-          <li class="csl-notice-list-item">欢迎光临本站，本站竭诚为您服务欢迎光临本站，本站sfsafsdfs竭诚为您服务</li>
-          <li class="csl-notice-list-item">111欢迎光临本站，本站竭诚为您服务欢迎光临本站，本站sfsafsdfs竭诚为您服务</li>
+          <li class="csl-notice-list-item">欢迎光临本站，本站竭诚为您服务欢迎光临本站!</li>
+          <!-- <li class="csl-notice-list-item">欢迎光临本站，本站竭诚为您服务欢迎光临本站，本站sfsafsdfs竭诚为您服务</li> -->
           <!-- <li class="csl-notice-list-item">2222欢迎光临本站，本站竭诚为您服务欢迎光临本站，本站sfsafsdfs竭诚为您服务</li>
           <li class="csl-notice-list-item">333欢迎光临本站，本站竭诚为您服务欢迎光临本站，本站sfsafsdfs竭诚为您服务</li>
           <li class="csl-notice-list-item">444欢迎光临本站，本站竭诚为您服务欢迎光临本站，本站sfsafsdfs竭诚为您服务</li> -->
@@ -57,7 +57,7 @@ export default {
     display inline-block
     width 22%
     .quee
-      height 200px
+      height 160px
       overflow hidden 
 
       .csl-notice-list
@@ -71,6 +71,8 @@ export default {
   .csl-title
     background-color #9e032e
     margin-bottom 20px
+    color #ffffff
+    text-align center
   @keyframes quee
     0%
       transform translateY(0)

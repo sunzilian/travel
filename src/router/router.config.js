@@ -15,6 +15,7 @@ export const navMenuRouters = {
         // name: '旅游资讯',
         name: 'Infomation',
         index: '2',
+        query: {show: 1},
         component: () => import( /* webpackChunkName: "infomation" */ '../views/Information/')
     },
     '旅游景点': {

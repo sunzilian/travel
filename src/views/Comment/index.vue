@@ -1,6 +1,6 @@
 <template>
   <div class="comment">
-    comment
+    <!-- comment -->
     <nav-menu activeIndex="5" />
     <div class="comment-main">
       <div class="comment-main-info">
@@ -8,16 +8,16 @@
           用户: 匿名
         </div>
         <div class="comment-maint-info-time comment-main-info-column">
-          留言时间: 2017/2/24 1:22:23
+          留言时间: 2020/2/24 14:22:23
         </div>
         <div class="comment-maint-info-content comment-main-info-column">
-          留言内容: 这个是留言内容
+          留言内容: 5.1推荐去哪里玩
         </div>
         <div class="comment-maint-info-reply-time comment-main-info-column">
-          回复时间: 2017/2/27 1:22:23
+          回复时间: 2020/2/24 16:12:39
         </div>
         <div class="comment-maint-info-reply-content comment-main-info-column">
-          回复内容: 这个是回复内容
+          回复内容: xxxxxxxxxxxxxxxxxxxxx
         </div>
       </div>
       <div class="comment-main-info">
@@ -25,13 +25,13 @@
           用户: 匿名
         </div>
         <div class="comment-maint-info-time comment-main-info-column">
-          留言时间: 2017/2/24 1:22:23
+          留言时间: 2020/2/24 14:42:53
         </div>
         <div class="comment-maint-info-content comment-main-info-column">
           留言内容: 这个是留言内容
         </div>
         <div class="comment-maint-info-reply-time comment-main-info-column">
-          回复时间: 2017/2/27 1:22:23
+          回复时间: 2020/2/27 20:22:29
         </div>
         <div class="comment-maint-info-reply-content comment-main-info-column">
           回复内容: 这个是回复内容
@@ -83,19 +83,19 @@ export default {
       this.$router.push('/home')
       return;
     }
-    this.$api.get({
-      url: '/news/getTopNews',
-      data: {}
-    }).then(({success, msg, data}) => {
-      if (success) {
-        console.log('getNewsTop', data);
-      }
-      else {
-        this.$message.error(msg)
-      }
-    }, error => {
-        this.$message.error(error)
-    })
+    // this.$api.get({
+    //   url: '/news/getTopNews',
+    //   data: {}
+    // }).then(({success, msg, data}) => {
+    //   if (success) {
+    //     console.log('getNewsTop', data);
+    //   }
+    //   else {
+    //     this.$message.error(msg)
+    //   }
+    // }, error => {
+    //     this.$message.error(error)
+    // })
   },
   // mounted() {
   //   this.$api.exampleModule.getExample().then(res => {
