@@ -31,8 +31,9 @@
           :key="item.name"
           class="resort-main-list-item"
         >
-          <img :src="item.picture" :alt="item.name">
+          <img :src="item.picture" :alt="item.name" @click.capture="toDetail">
           <span>{{item.name}} {{item.price}}</span>
+          <span @click="toCollection(item)">收藏</span>
         </div>
       </div>
       <el-pagination
@@ -292,8 +293,30 @@ export default {
       console.log(currentPage, 3333);
       this.currentPage = currentPage
       // this.$router.replace({query: { ...this.query, currentPage }})
+    },
+    getStatus (urlStr) {
+      var urlStrArr = urlStr.split('/')
+      return urlStrArr[urlStrArr.length - 1]
+    },
+    toDetail() {
+      this.$router.push({name: 'Detail'})
+    },
+    toCollection (item) {
+      console.log(item)
     }
   },
+  // watch: {
+  //   '$route' (to, from) {
+  //     console.log(to, from)
+  //     //刷新参数放到这里里面去触发就可以刷新相同界面了
+  //     // this.getStatus(this.$route.path)
+  //     // window.location.reload()
+  //     if (to.query.isRecommend !== from.query.isRecommend) {
+  //       window.location.reload()
+  //     }
+  // }
+
+  // }
 }
 </script>
 
@@ -332,8 +355,8 @@ setBgFont($font) {
     .resort-main-list-item
       display inline-block
       text-align center
-      width 240px
-      margin 10px 20px
+      width 20%
+      margin 10px 2.5%
 
       img
         width 100%

@@ -2,7 +2,7 @@
   <div class="my-center">
     <v-header />
     <v-sidebar />
-     <router-view></router-view>
+     <router-view :key="fullPath"></router-view>
   </div>
 </template>
 

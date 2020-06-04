@@ -20,13 +20,15 @@ export const navMenuRouters = {
     },
     '旅游景点': {
         path: '/resort',
-        name: 'Resort',
+        name: 'resort',
+        // redirect: '/resort',
         index: '3',
         component: () => import( /* webpackChunkName: "resort" */ '../views/Resort/')
     },
     '个性推荐': {
-        path: '/recommend',
-        name: 'Recommend',
+        path: '/resort',
+        name: 'resort',
+        // redirect: '/recommend',
         index: '4',
         query: {isRecommend: true},
         // component: () => import( /* webpackChunkName: "recommend" */ '../views/Recommend/')

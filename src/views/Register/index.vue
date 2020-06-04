@@ -32,7 +32,7 @@
           autocomplete="off"
         ></el-input>
       </el-form-item>
-      <el-form-item label="确认密码" prop="checkPass">
+      <el-form-item v-if="isRegitster" label="确认密码" prop="checkPass">
         <el-input
           type="password"
           v-model="registerForm.checkPass"
@@ -125,7 +125,24 @@ export default {
         pass: '',
         checkPass: '',
         sex: '1',
-        loveList: [],
+        loveList: [
+          {
+            id: 0,
+            name: '风景'
+          },
+          {
+            id: 1,
+            name: '山水'
+          },
+          {
+            id: 2,
+            name: '古迹'
+          },
+          {
+            id: 3,
+            name: '室内'
+          }
+        ],
         love: '',
         phone: '',
         email: ''
@@ -147,35 +164,41 @@ export default {
   },
   created() {
     if (!this.isRegitster) {
-      this.$api.get({
-        url: '/user/getUser',
-        data: {id: 1}
-      })
-      .then(({success, data}) => {
-        console.log(data);
-        if (success) {
-          console.log(data);
-          // this.registerForm = data;
-          this.$set(this.registerForm, 'sex', data.sex)
-          this.$set(this.registerForm, 'account', data.account)
-          this.$set(this.registerForm, 'love', data.love)
-          this.$set(this.registerForm, 'pass', data.password)
-          this.$set(this.registerForm, 'username', data.nickName)
-        }
-      })
+      this.$set(this.registerForm, 'sex', true)
+      this.$set(this.registerForm, 'account','admin')
+      this.$set(this.registerForm, 'love', 2)
+      this.$set(this.registerForm, 'pass', '123456')
+      this.$set(this.registerForm, 'username', '昵称')
+      this.$set(this.registerForm, 'phone', '18356455241')
+      // this.$api.get({
+      //   url: '/user/getUser',
+      //   data: {id: 1}
+      // })
+      // .then(({success, data}) => {
+      //   console.log(data);
+      //   if (success) {
+      //     console.log(data);
+      //     // this.registerForm = data;
+      //     this.$set(this.registerForm, 'sex', data.sex)
+      //     this.$set(this.registerForm, 'account', data.account)
+      //     this.$set(this.registerForm, 'love', data.love)
+      //     this.$set(this.registerForm, 'pass', data.password)
+      //     this.$set(this.registerForm, 'username', data.nickName)
+      //   }
+      // })
     }
-    setTimeout(() => {
-      this.$api.get({
-        url: '/scenicspotType/getList',
-        data: {}
-      })
-      .then(({success, data}) => {
-        console.log(data);
-        if (success) {
-          this.registerForm.loveList = data;
-        }
-      })
-    },);
+    // setTimeout(() => {
+    //   this.$api.get({
+    //     url: '/scenicspotType/getList',
+    //     data: {}
+    //   })
+    //   .then(({success, data}) => {
+    //     console.log(data);
+    //     if (success) {
+    //       this.registerForm.loveList = data;
+    //     }
+    //   })
+    // },);
   },
   mounted() {
     // this.$api.exampleModule.getExample().then(res => {
@@ -186,20 +209,21 @@ export default {
       submitForm(formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
-            console.log(valid, this.registerForm, 76446);
-            this.$api.post({
-              url: '/user/register',
-              data: this.registerForm
-            }).then(({success, msg}) => {
-              if (success) {
-                this.$router.push('administrator');
-              }
-              else {
-                this.$message.error(msg)
-              }
-            }, ({msg}) => {
-              this.$message.error(msg)
-            })
+            this.$router.push('administrator');
+            // console.log(valid, this.registerForm, 76446);
+            // this.$api.post({
+            //   url: '/user/register',
+            //   data: this.registerForm
+            // }).then(({success, msg}) => {
+            //   if (success) {
+            //     this.$router.push('administrator');
+            //   }
+            //   else {
+            //     this.$message.error(msg)
+            //   }
+            // }, ({msg}) => {
+            //   this.$message.error(msg)
+            // })
           } else {
             this.$message.error('请检查下各项信息')
             return false;

@@ -17,7 +17,7 @@ export default {
       this.$router.push('administrator');
     },
     registerHandle() {
-      this.$router.push({name: 'register', query: {isregister: true} })
+      this.$router.push({name: 'register', query: {isRegister: true} })
     }
   }
 };

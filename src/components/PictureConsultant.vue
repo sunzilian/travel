@@ -19,7 +19,7 @@ export default {
     return {
       // newsList: []
       newsList: [
-        {
+        { 
             "id": 4,
             "name": "木兰围场",
             "context": null,
