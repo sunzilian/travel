@@ -8,12 +8,13 @@
     <div class="home-main-pic"></div>
 
     <consultant-wrapper />
-    <div style="margin-top: 30px; padding-left: 15px;">景点列表</div>
+    <div style="margin-top: 30px; padding-left: 15px;font-size: 30px">景点列表</div>
     <div class="home-pic-list">
       <div
         v-for="(item, index) in tableDate"
         :key="index"
         class="home-pic-list-item"
+        @click="toDetail(index)"
       >
         <img :src="item.imgUrl" alt="">
         <span>{{item.name}}</span>
@@ -178,6 +179,11 @@ export default {
     //   console.log(rej, 333);
     // })
   },
+  methods: {
+    toDetail(index) {
+      this.$router.push({name: 'Detail', query: {index}})
+    }
+  }
   
 }
 </script>

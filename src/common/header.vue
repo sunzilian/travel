@@ -3,7 +3,8 @@
     <el-col :span="12" class="header-img">
       <div class="header-logo">
         <div class="logo-wrap">
-          <!-- <img src="../assets/images/logo.png" alt=""> -->
+          <!-- <img src="../asset
+          s/images/logo.png" alt=""> -->
 					<span class="logo-title">个人中心</span>
         </div>
       </div>
@@ -47,6 +48,10 @@ export default {
         closeOnClickModal: false
       }).then(() => {
         console.log(222222);
+        window.localStorage.clear()
+        setTimeout(() => {
+          this.$router.push({name: 'Home'})
+        }, 0);
         // logout({params: { channel: system }}).then(res => {
         //   this.$router.push({name: 'login'})
         //   localStorage.removeItem('authority')
@@ -64,7 +69,7 @@ export default {
   height 60px
   width 100%
   line-height 60px
-  background #fff
+  background #324157
   color #909399
   min-width 1200px
   .header-img

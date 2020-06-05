@@ -39,6 +39,9 @@ const routes = [
   {
     path: '/mycenter',
     name: 'mycenter',
+    redirect: {
+      name: 'mycollection'
+    },
     component: () => import(/* webpackChunkName: "mycenter" */ '../views/MyCenter'),
     children: [
       {
