@@ -81,32 +81,33 @@ export default {
           if (valid) {
             let {username, pass} = this.administratorForm;
             console.log(pass);
-            window.localStorage.setItem('userName', username)
-            window.localStorage.setItem('isLogin', true)
-            setTimeout(() => {
-              this.$router.push('home');
-            }, 0);
-            // this.$api.get({
-            //   url: '/user/login',
-            //   data: {
-            //     userAccount: username,
-            //     userpwd: pass
-            //   }
-            // // }).then(({success, data: {nickName = '', token}, msg}) => {
-            // }).then(({success, data, msg}) => {
-            //   console.log(success,222);
-            //   if (success) {
-            //     this.$router.push('home');
-            //     window.localStorage.setItem('userName', data.nickName)
-            //     window.localStorage.setItem('token', data.token)
-            //     window.localStorage.setItem('isLogin', true)
-            //   }
-            //   else {
-            //     this.$message.error(msg)
-            //   }
-            // }, rej => {
-            //   console.log(rej, 333);
-            // })
+            // window.localStorage.setItem('userName', username)
+            // window.localStorage.setItem('isLogin', true)
+            // setTimeout(() => {
+            //   this.$router.push('home');
+            // }, 0);
+            this.$api.get({
+              url: '/user/login',
+              data: {
+                userAccount: username,
+                userpwd: pass
+              }
+            // }).then(({success, data: {nickName = '', token}, msg}) => {
+            }).then(({success, data, msg}) => {
+              console.log(success,222);
+              if (success) {
+                this.$router.push('home');
+                window.localStorage.setItem('userName', data.nickName)
+                window.localStorage.setItem('userId', data.id)
+                window.localStorage.setItem('token', data.token)
+                window.localStorage.setItem('isLogin', true)
+              }
+              else {
+                this.$message.error(msg)
+              }
+            }, rej => {
+              console.log(rej, 333);
+            })
           }
         });
       },

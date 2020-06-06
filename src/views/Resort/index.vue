@@ -10,7 +10,7 @@
           class="resort-keys-item"
           v-for="item in resortKeysList"
           :key="item.name"
-          @click="resortKeyHandle"
+          @click="resortKeyHandle(item)"
         >
           {{item.name}}
         </span>
@@ -25,16 +25,19 @@
           </el-form-item>
         </el-form>
       </div> -->
-      <div class="resort-main-list">
+      <div class="resort-main-list" v-if="resortMainList.length > 0 ">
         <div
           v-for="item in resortMainList"
           :key="item.name"
           class="resort-main-list-item"
         >
-          <img :src="item.picture" :alt="item.name" @click.capture="toDetail">
+          <img :src="item.picture" :alt="item.name" @click.capture="toDetail(item)">
           <span>{{item.name}} {{item.price}}</span>
           <span @click="toCollection(item)">收藏</span>
         </div>
+      </div>
+      <div v-else style="min-height: 200px;line-height: 200px; text-align:center">
+        暂无数据
       </div>
       <el-pagination
         @size-change="handleSizeChange"
@@ -53,26 +56,26 @@
 // import HelloWorld from '@/components/HelloWorld.vue'
 
 import NavMenu from '../../components/NavMenu';
-const resortKeysList = [
-  {
-    name: '购物'
-  },
-  {
-    name: '度假'
-  },
-  {
-    name: '人文'
-  },
-  {
-    name: '自然'
-  },
-  {
-    name: '出境'
-  },
-  {
-    name: '湖水'
-  }
-];
+// const resortKeysList = [
+//   {
+//     name: '购物'
+//   },
+//   {
+//     name: '度假'
+//   },
+//   {
+//     name: '人文'
+//   },
+//   {
+//     name: '自然'
+//   },
+//   {
+//     name: '出境'
+//   },
+//   {
+//     name: '湖水'
+//   }
+// ];
 const resortMainList = [
   // {
   //   name: '泰国曼谷',
@@ -109,7 +112,7 @@ export default {
   name: 'resort',
   data() {
     return {
-      resortKeysList,
+      resortKeysList: [],
       resortMainList,
       resortSearch: {
         key: ''
@@ -214,9 +217,9 @@ export default {
       this.getScenicspotTypeList()
     }
     else {
-      // this.getTopScenicspot()
-      this.resortMainList = this.tableDate;
-      this.total = this.tableDate.length || 10
+      this.getTopScenicspot()
+      // this.resortMainList = this.tableDate;
+      // this.total = this.tableDate.length || 10
     }
   },
   mounted() {
@@ -229,9 +232,9 @@ export default {
     onSubmit() {
       console.log('submit!', this.resortSearch.key);
     },
-    resortKeyHandle(type) {
-      console.log(type);
-      this.getScenicspotNewsPage(type)
+    resortKeyHandle(item) {
+      console.log(item);
+      this.getScenicspotNewsPage(item.id)
     },
     getTopScenicspot() {
       this.$api.get({
@@ -280,6 +283,7 @@ export default {
       .then(({success, data}) => {
         console.log(data);
         if (success) {
+          data.unshift({id: '0', name: '全部'})
           this.resortKeysList = data;
         }
       })
@@ -298,25 +302,43 @@ export default {
       var urlStrArr = urlStr.split('/')
       return urlStrArr[urlStrArr.length - 1]
     },
-    toDetail() {
-      this.$router.push({name: 'Detail'})
+    toDetail(item) {
+      this.$router.push({name: 'Detail', query: {id: item.id, type: 'sight'}})
     },
     toCollection (item) {
       console.log(item)
+      if (!window.localStorage.getItem('isLogin')) {
+        this.$message.warning('请先去登录')
+        return
+      }
+      this.$api.post({
+        url: '/collection/addCollection',
+        data: {
+         secnicspotId: item.id
+        //  collection: {
+        //    secnicspotId: item.id
+        //  }
+        }
+      })
+      .then(({success, data}) => {
+        if (success || data) {
+          this.$message.success('收藏成功');
+        }
+      })
     }
   },
-  // watch: {
-  //   '$route' (to, from) {
-  //     console.log(to, from)
-  //     //刷新参数放到这里里面去触发就可以刷新相同界面了
-  //     // this.getStatus(this.$route.path)
-  //     // window.location.reload()
-  //     if (to.query.isRecommend !== from.query.isRecommend) {
-  //       window.location.reload()
-  //     }
-  // }
+  watch: {
+    '$route' (to, from) {
+      console.log(to, from)
+      //刷新参数放到这里里面去触发就可以刷新相同界面了
+      // this.getStatus(this.$route.path)
+      // window.location.reload()
+      if (to.query.isRecommend !== from.query.isRecommend) {
+        window.location.reload()
+      }
+  }
 
-  // }
+  }
 }
 </script>
 
@@ -338,7 +360,9 @@ setBgFont($font) {
   .resort-keys-list
     setBgFont(18px)
     margin-top 10px
-    padding 4px 
+    padding 4px
+    .resort-keys-item:hover
+      background-color rgb(255, 208, 75)
   .resort-key-search-wrapper
     margin-top 5px
     padding 4px

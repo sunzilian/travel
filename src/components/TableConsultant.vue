@@ -3,9 +3,11 @@
     :data="tableData"
     :show-header="false"
     border
-    :max-height="show? 'auto' : '300px'"
+    class="table-consultant"
+    :max-height="show? 'auto' : 300"
     style="width: 100%"
     size="small"
+    @row-click="toDetail"
    >
     <el-table-column
       prop="name"
@@ -22,7 +24,7 @@
     </el-table-column>
     <el-table-column
       v-if="show"
-      prop="datePush"
+      prop="publishDate"
       label="日期"
       :width="dateColumnWidth"
       class-name="aa"
@@ -30,7 +32,7 @@
     </el-table-column>
     <el-table-column
       v-if="!show"
-      prop="time"
+      prop="publishDate"
       label="日期"
       :width="dateColumnWidth"
       class-name="aa"
@@ -54,24 +56,25 @@
     },
     data() {
       return {
-        tableData: [{
-          date: '2016-05-02',
-          name: '王小虎王小虎王小虎王小虎王小虎王小虎王小虎',
-          url: '/#/resort',
-          address: '上海市普陀区金沙江路 1518 弄'
-        }, {
-          date: '2016-05-04',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1517 弄'
-        }, {
-          date: '2016-05-01',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1519 弄'
-        }, {
-          date: '2016-05-03',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1516 弄'
-        }],
+        tableData: [],
+        // tableData: [{
+        //   date: '2016-05-02',
+        //   name: '王小虎王小虎王小虎王小虎王小虎王小虎王小虎',
+        //   url: '/#/resort',
+        //   address: '上海市普陀区金沙江路 1518 弄'
+        // }, {
+        //   date: '2016-05-04',
+        //   name: '王小虎',
+        //   address: '上海市普陀区金沙江路 1517 弄'
+        // }, {
+        //   date: '2016-05-01',
+        //   name: '王小虎',
+        //   address: '上海市普陀区金沙江路 1519 弄'
+        // }, {
+        //   date: '2016-05-03',
+        //   name: '王小虎',
+        //   address: '上海市普陀区金沙江路 1516 弄'
+        // }],
         tableDateTotal: [
           {
             "id": 1,
@@ -177,16 +180,40 @@
       }
     },
     created() {
-      let tableDateTotal = JSON.parse(JSON.stringify(this.tableDateTotal))
-      for (let index = 0; index < tableDateTotal.length; index++) {
-        const item = tableDateTotal[index];
-        tableDateTotal[index].time = item.datePush.slice(0,10)
-      }
-      if (this.show) {
-        this.tableData = tableDateTotal
-      }
-      else {
-        this.tableData = tableDateTotal.slice(0, 4)
+      this.getNewsList()
+    },
+    methods: {
+      toDetail(row) {
+        this.$router.push({name: 'Detail', query: {id: row.id, type: 'news'}})
+      },
+      getNewsList() {
+       this.$api.get({
+        url: '/news/getNewsPage',
+        data: {
+          pageIndex: 1,
+          pageSize: 10
+        }
+      }).then(res => {
+        if (res.success) {
+          console.log(res, 464646);
+          // this.tableDate = res.data.records.slice(0, 8)
+          // TODO:
+          // let tableDateTotal = JSON.parse(JSON.stringify(this.tableDateTotal))
+          // for (let index = 0; index < tableDateTotal.length; index++) {
+          //   const item = tableDateTotal[index];
+          //   tableDateTotal[index].time = item.datePush.slice(0,10)
+          // }
+          if (this.show) {
+            this.tableData = res.data.records
+          }
+          else {
+            this.tableData = res.data.records.slice(0, 4)
+          }
+        }
+        console.log(res,8888888);
+      }, rej => {
+        console.log(rej, 333);
+      })
       }
     }
   }
@@ -195,4 +222,9 @@
 <style lang="stylus">
 .aa
   background-color #f8f8f8
+
+.table-consultant
+  .el-table__empty-block
+    min-height 160px
+
 </style>

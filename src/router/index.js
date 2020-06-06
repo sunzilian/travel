@@ -55,6 +55,12 @@ const routes = [
         component: () => import( /* webpackChunkName: "myCommet" */ '../views/MyCenter/myCommet.vue')
       },
       {
+        name: 'mycommetDetail',
+        path: '/mycommetDetail',
+        // component: () => import( /* webpackChunkName: "myCommet" */ '../views/MyCenter/myCommet.vue')
+        component: () => import( /* webpackChunkName: "commentDetail" */ '../views/Comment/commentDetail.vue')
+      },
+      {
         name: 'myinfo',
         path: 'myinfo',
         // component: () => import( /* webpackChunkName: "myInfo" */ '../views/MyCenter/myInfo.vue')

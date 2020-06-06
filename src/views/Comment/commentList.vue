@@ -1,8 +1,6 @@
 <template>
   <div class="comment">
-    <!-- comment -->
-    <nav-menu activeIndex="5" />
-    <!-- <div style="text-align:right">
+    <div style="text-align:right; margin-top: 40px; padding-right: 40px">
       <el-button @click="addComment()" size="medium" type="primary">新建</el-button>
     </div>
     <el-table
@@ -15,22 +13,22 @@
       @row-click="toDetail"
     >
       <el-table-column
-        prop="content"
+        prop="title"
         label="标题"
         min-width="180"
         :show-overflow-tooltip="false"
         class-name="aa"
       >
       </el-table-column>
-      <el-table-column
+      <!-- <el-table-column
         prop="userName"
         label="留言者"
         :width="dateColumnWidth"
         class-name="aa"
       >
-      </el-table-column>
+      </el-table-column> -->
       <el-table-column
-        prop="time"
+        prop="createDate"
         label="评论日期"
         :width="dateColumnWidth"
         class-name="aa"
@@ -38,52 +36,13 @@
       </el-table-column>
       
     </el-table>
-    <div class="comment-main">
-      <div class="comment-main-info" v-for="item in commentList" :key="item.time">
-        <div class="comment-maint-info-user comment-main-info-column">
-          用户:{{item.userName}}
-        </div>
-        <div class="comment-maint-info-time comment-main-info-column">
-          留言时间: {{item.time}}
-        </div>
-        <div class="comment-maint-info-content comment-main-info-column">
-          留言内容: {{item.content}}
-        </div>
-        <div class="comment-maint-info-reply-time comment-main-info-column" v-if="item.replyTime">
-          回复时间: {{item.replyTime}}
-        </div>
-        <div class="comment-maint-info-reply-content comment-main-info-column" v-if="item.replyContent">
-          回复内容: {{item.replyContent}}
-        </div>
-      </div>
-      <span>用户名:</span>
-      <el-input
-        v-model="commentUserName"
-        placeholder="请输入用户名"
-        class="comment-user-name"
-      />
-      <span>(空为匿名)</span>
-      <br/>
-      <el-input
-        type="textarea"
-        :autosize="{ minRows: 2, maxRows: 4 }"
-        placeholder="请输入内容"
-        v-model="commentContent"
-        class="comment-content"
-      />
-
-      <br />
-      <el-button class="comment-confirm" size="small" @click="comfirmHandle">确定</el-button>
-      <el-button class="comment-cancel" size="small" @click="cancelHandle">取消</el-button>
-    </div> -->
-    <router-view></router-view>
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
 // import HelloWorld from '@/components/HelloWorld.vue'
-import NavMenu from "../../components/NavMenu";
+// import NavMenu from "../../components/NavMenu";
 
 export default {
   name: "home",
@@ -91,7 +50,8 @@ export default {
     return {
       commentUserName: '',
       commentContent: '',
-      commentList: [
+      commentList: [],
+      commentList1: [
         {
           userName: '匿名',
           content: '5.1推荐去哪里玩',
@@ -108,20 +68,18 @@ export default {
         },
         
       ],
-      dateColumnWidth: 120
+      dateColumnWidth: 150
     }
   },
-  components: {
-    // HelloWorld
-    NavMenu
-  },
   created() {
+    console.log(this.$router.query)
     if (!window.localStorage.getItem('isLogin')) {
       this.$message.warning('请先去登录')
       this.$router.push('/home')
       return;
     }
     this.commentUserName = window.localStorage.getItem('userName') || '匿名';
+    this.getAllCommitPage()
 
     // this.$api.get({
     //   url: '/news/getTopNews',
@@ -164,9 +122,26 @@ export default {
       this.commentUserName = '';
       this.commentContent = '';
     },
+    getAllCommitPage() {
+      this.$api.get({
+        url: '/comment/getAllCommitPage',
+        data: {
+          pageSize: 20,
+          pageIndex: 1
+        }
+      })
+      .then(({success, data}) => {
+        console.log(data,'dddddddd');
+        this.commentList = data.records
+        if (success) {
+          console.log(data);
+          // this.registerForm = data;
+        }
+      })
+    },
     toDetail(info) {
       console.log(info);
-      this.$router.push({name:'commentDetail'})
+      this.$router.push({name:'commentDetail', query: {id: info.id, modify: false}})
     },
     addComment() {
       this.$router.push({name:'commentDetail',query:{modify:true, add: true}})
@@ -175,9 +150,9 @@ export default {
 };
 </script>
 
-<style lang="stylus">
+<style lang="stylus" scoped>
 .comment
-
+  padding 0 200px
   .comment-main
     width 80%
     margin 20px auto 0

@@ -78,7 +78,7 @@ export default {
       this.$router.push('administrator');
     },
     registerHandle() {
-      this.$router.push('register')
+      this.$router.push({name: 'Register', query: {isRegister: true} })
     },
     mycenter() {
       this.$router.push('mycenter')

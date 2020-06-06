@@ -45,7 +45,25 @@ export const navMenuRouters = {
         path: '/comment',
         name: 'Comment',
         index: '5',
-        component: () => import( /* webpackChunkName: "comment" */ '../views/Comment/')
+        component: () => import( /* webpackChunkName: "comment" */ '../views/Comment/'),
+        redirect: '/comment',
+        children: [
+            {
+                name: 'commentList',
+                path: '',
+                component: () => import( /* webpackChunkName: "commentList" */ '../views/Comment/commentList.vue')
+            },
+            {
+                name: 'commentDetail',
+                path: '/commentDetail',
+                component: () => import( /* webpackChunkName: "commentDetail" */ '../views/Comment/commentDetail.vue')
+            },
+            {
+                name: 'commentAdd',
+                path: '/commentAdd',
+                component: () => import( /* webpackChunkName: "commentDetail" */ '../views/Comment/commentDetail.vue')
+            }
+        ]
 
     // },
     // '管理登录': {

@@ -21,7 +21,7 @@ const parseParams = (uri, params) => {
 
 const ajax = function (type, params={data: null}) {
   // const base_url = 'http://0d05825f.ngrok.io';
-  const base_url = 'http://947255bcd7d3.ngrok.io';
+  const base_url = 'http://b43a11a16a06.ngrok.io';
   let Ruq_URL = base_url;
 
   if (type === 'get') {

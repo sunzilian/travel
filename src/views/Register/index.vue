@@ -18,17 +18,17 @@
           autocomplete="off"
         ></el-input>
       </el-form-item>
-      <el-form-item label="用户名" prop="username">
+      <el-form-item label="用户名" prop="nickName">
         <el-input
           type="text"
-          v-model="registerForm.username"
+          v-model="registerForm.nickName"
           autocomplete="off"
         ></el-input>
       </el-form-item>
-      <el-form-item label="密码" prop="pass">
+      <el-form-item label="密码" prop="password">
         <el-input
           type="password"
-          v-model="registerForm.pass"
+          v-model="registerForm.password"
           autocomplete="off"
         ></el-input>
       </el-form-item>
@@ -62,7 +62,8 @@
         <el-button type="primary" @click="submitForm('registerForm')"
           >提交</el-button
         >
-        <el-button @click="resetForm('registerForm')">重置</el-button>
+        <el-button v-if="isRegitster" @click="resetForm('registerForm')">重置</el-button>
+        <el-button v-else @click="handleCancel('registerForm')">取消</el-button>
       </el-form-item>
     </el-form>
   </div>
@@ -75,7 +76,7 @@
 export default {
   name: "home",
   data() {
-    let username = (rule, value, callback) => {
+    let nickName = (rule, value, callback) => {
       if (!value) {
         return callback(new Error('用户名不能为空'));
       }
@@ -95,7 +96,7 @@ export default {
     let validatePass2 = (rule, value, callback) => {
       if (value === "") {
         callback(new Error("请再次输入密码"));
-      } else if (value !== this.registerForm.pass) {
+      } else if (value !== this.registerForm.password) {
         callback(new Error("两次输入密码不一致!"));
       } else {
         callback();
@@ -121,8 +122,8 @@ export default {
     return {
       registerForm: {
         account: '',
-        username: '',
-        pass: '',
+        nickName: '',
+        password: '',
         checkPass: '',
         sex: '1',
         loveList: [
@@ -148,15 +149,16 @@ export default {
         email: ''
       },
       rules: {
-        username: [{ validator: username, trigger: 'blur' }],
-        pass: [{ validator: validatePass, trigger: 'blur' }],
+        nickName: [{ validator: nickName, trigger: 'blur' }],
+        password: [{ validator: validatePass, trigger: 'blur' }],
         checkPass: [{ validator: validatePass2, trigger: 'blur' }],
         phone: [{ validator: phone, trigger: 'blur'}],
         email: [
             { type: 'email', message: '请输入正确的邮箱地址', trigger: 'blur' }
           ]
       },
-      isRegitster: this.$route.query.isRegitster
+      isRegitster: this.$route.query.isRegister,
+      allInfo: {}
     };
   },
   components: {
@@ -164,76 +166,97 @@ export default {
   },
   created() {
     if (!this.isRegitster) {
-      this.$set(this.registerForm, 'sex', true)
-      this.$set(this.registerForm, 'account','admin')
-      this.$set(this.registerForm, 'love', 2)
-      this.$set(this.registerForm, 'pass', '123456')
-      this.$set(this.registerForm, 'username', '昵称')
-      this.$set(this.registerForm, 'phone', '18356455241')
-      // this.$api.get({
-      //   url: '/user/getUser',
-      //   data: {id: 1}
-      // })
-      // .then(({success, data}) => {
-      //   console.log(data);
-      //   if (success) {
-      //     console.log(data);
-      //     // this.registerForm = data;
-      //     this.$set(this.registerForm, 'sex', data.sex)
-      //     this.$set(this.registerForm, 'account', data.account)
-      //     this.$set(this.registerForm, 'love', data.love)
-      //     this.$set(this.registerForm, 'pass', data.password)
-      //     this.$set(this.registerForm, 'username', data.nickName)
-      //   }
-      // })
+      // this.$set(this.registerForm, 'sex', true)
+      // this.$set(this.registerForm, 'account','admin')
+      // this.$set(this.registerForm, 'love', 2)
+      // this.$set(this.registerForm, 'password', '123456')
+      // this.$set(this.registerForm, 'nickName', '昵称')
+      // this.$set(this.registerForm, 'phone', '18356455241')
+      // TODO:
+      this.$api.get({
+        url: '/user/getUser',
+        data: {
+          id: window.localStorage.getItem('userId')
+        }
+      })
+      .then(({success, data}) => {
+        console.log(data);
+        if (success) {
+          console.log(data);
+          // this.registerForm = data;
+          this.$set(this.registerForm, 'sex', data.sex)
+          this.$set(this.registerForm, 'account', data.account)
+          this.$set(this.registerForm, 'love', data.love)
+          this.$set(this.registerForm, 'password', data.password)
+          this.$set(this.registerForm, 'nickName', data.nickName)
+          this.$set(this.registerForm, 'phone', data.phone)
+          this.allInfo = data
+        }
+      })
     }
-    // setTimeout(() => {
-    //   this.$api.get({
-    //     url: '/scenicspotType/getList',
-    //     data: {}
-    //   })
-    //   .then(({success, data}) => {
-    //     console.log(data);
-    //     if (success) {
-    //       this.registerForm.loveList = data;
-    //     }
-    //   })
-    // },);
   },
-  mounted() {
-    // this.$api.exampleModule.getExample().then(res => {
-    //   console.log(res);
-    // });
-  },
+
   methods: {
-      submitForm(formName) {
-        this.$refs[formName].validate((valid) => {
-          if (valid) {
-            this.$router.push('administrator');
-            // console.log(valid, this.registerForm, 76446);
-            // this.$api.post({
-            //   url: '/user/register',
-            //   data: this.registerForm
-            // }).then(({success, msg}) => {
-            //   if (success) {
-            //     this.$router.push('administrator');
-            //   }
-            //   else {
-            //     this.$message.error(msg)
-            //   }
-            // }, ({msg}) => {
-            //   this.$message.error(msg)
-            // })
-          } else {
-            this.$message.error('请检查下各项信息')
-            return false;
+    submitForm(formName) {
+      this.$refs[formName].validate((valid) => {
+        if (valid) {
+          console.log(valid, this.registerForm, 76446);
+          if (this.isRegitster) {
+            this.registerUser()
           }
-        });
-      },
-      resetForm(formName) {
-        this.$refs[formName].resetFields();
-      }
+          else {
+            this.updateUser()
+          }
+          
+        } else {
+          this.$message.error('请检查下各项信息')
+          return false;
+        }
+      });
+    },
+    resetForm(formName) {
+      this.$refs[formName].resetFields();
+    },
+    registerUser() {
+      this.$api.post({
+        url: '/user/register',
+        data: this.registerForm
+      }).then(({success, msg}) => {
+        if (success) {
+          this.$message.success('注册成功');
+          setTimeout(() => {
+            this.$router.push('administrator');
+          }, 10);
+        }
+        else {
+          this.$message.error(msg)
+        }
+      }, ({msg}) => {
+        this.$message.error(msg)
+      })
+    },
+    updateUser() {
+      this.$api.post({
+        url: '/user/update',
+        data: {
+          ...this.allInfo,
+          ...this.registerForm
+          }
+      }).then(({success, msg}) => {
+        if (success) {
+          this.$message.success('更新成功');
+        }
+        else {
+          this.$message.error(msg)
+        }
+      }, ({msg}) => {
+        this.$message.error(msg)
+      })
+    },
+    handleCancel() {
+      this.$router.go(-1)
     }
+  }
 };
 </script>
 

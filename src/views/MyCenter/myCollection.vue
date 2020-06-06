@@ -6,9 +6,9 @@
         :key="item.name"
         class="resort-main-list-item"
       >
-        <img :src="item.picture" :alt="item.name" @click="toDetail">
+        <img :src="item.picture" :alt="item.name" @click="toDetail(item)">
         <span>{{item.name}} {{item.price}}</span>
-        <span @click="cancelCollection(item)">取消关注</span>
+        <span @click="cancelCollection(item)">取消收藏</span>
       </div>
     </div>
     <div v-else style="height: 100%; display: flex; align-items: center; justify-content: center;">
@@ -111,15 +111,44 @@ export default {
     }
   },
   created() {
-    this.resortMainList = this.tableDate.slice(0, 5)
+    // this.resortMainList = this.tableDate.slice(0, 5)
+    this.getCollectionPage()
   },
   methods: {
-    toDetail() {
-      this.$router.push({name: 'Detail'})
+    toDetail(item) {
+      this.$router.push({name: 'Detail', query: {id: item.id, type: 'sight'}})
+    },
+    getCollectionPage() {
+      this.$api.get({
+        url: '/collection/getCollectionPage',
+        data: {
+          pageSize: 10,
+          pageIndex: 1
+        }
+      })
+      .then(({success, data}) => {
+        console.log(data);
+        if (success) {
+          console.log(data, 'my ssss');
+          this.resortMainList = data.records
+        }
+      })
     },
     cancelCollection(info){
       console.log(info)
      this.resortMainList = this.resortMainList.filter(item => item.name !== info.name)
+     this.$api.get({
+        url: '/collection/delCollection',
+        data: {
+          id: info.id
+        }
+      })
+      .then(({success, data}) => {
+        console.log(data);
+        if (success) {
+          console.log(data, 'my eeeeeee');
+        }
+      })
     }
   }
 }

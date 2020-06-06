@@ -4,9 +4,10 @@
       height="160px"
       :autoplay="false"
     >
-      <el-carousel-item v-for="item in newsList" :key="item.name">
+      <el-carousel-item v-for="item in newsList" :key="item.name" @click="toDetail(item)">
         <!-- <h3 class="small">{{ item }}</h3> -->
-        <img :src="item.picture" alt="" width="100%">
+        <img :src="item.picture" :alt="item.name" width="100%" @click="toDetail(item)">
+        <!-- <img src="http://cache.house.sina.com.cn/infodichan/dichanpic/c1/30/c310539a390a68d9508156cb6a5f59af.jpg" alt="" width="100%"> -->
         <div style="position: absolute; bottom:0;left: 0; with: 100%;background-color: rgba(0,0,0,0.5);color: #ffffff">{{item.name}}</div>
       </el-carousel-item>
     </el-carousel>
@@ -17,57 +18,57 @@
 export default {
   data() {
     return {
-      // newsList: []
-      newsList: [
-        { 
-            "id": 4,
-            "name": "木兰围场",
-            "context": null,
-            "picture": "http://947255bcd7d3.ngrok.io/uploadFile/1590400862118mulanweichang.jpg",
-            "publishName": null,
-            "publishDate": null,
-            "status": 1,
-            "top": 1,
-            "detected": false,
-            "createDate": null
-        },
-        {
-            "id": 3,
-            "name": "古北水镇",
-            "context": null,
-            "picture": "http://947255bcd7d3.ngrok.io/uploadFile/1590400827916gubeishuizhen.jpg",
-            "publishName": null,
-            "publishDate": null,
-            "status": 1,
-            "top": 1,
-            "detected": false,
-            "createDate": null
-        },
-        {
-            "id": 2,
-            "name": "北戴河",
-            "context": null,
-            "picture": "http://947255bcd7d3.ngrok.io/uploadFile/1590400666793beidaihe.jpg",
-            "publishName": null,
-            "publishDate": null,
-            "status": 1,
-            "top": 1,
-            "detected": false,
-            "createDate": null
-        },
-        {
-            "id": 1,
-            "name": "张家口风景秀丽",
-            "context": null,
-            "picture": "http://947255bcd7d3.ngrok.io/uploadFile/1590400927081zhangjiakou.jpg",
-            "publishName": null,
-            "publishDate": null,
-            "status": 1,
-            "top": 1,
-            "detected": false,
-            "createDate": null
-        }
-      ],
+      newsList: []
+      // newsList: [
+      //   { 
+      //       "id": 4,
+      //       "name": "木兰围场",
+      //       "context": null,
+      //       "picture": "http://947255bcd7d3.ngrok.io/uploadFile/1590400862118mulanweichang.jpg",
+      //       "publishName": null,
+      //       "publishDate": null,
+      //       "status": 1,
+      //       "top": 1,
+      //       "detected": false,
+      //       "createDate": null
+      //   },
+      //   {
+      //       "id": 3,
+      //       "name": "古北水镇",
+      //       "context": null,
+      //       "picture": "http://947255bcd7d3.ngrok.io/uploadFile/1590400827916gubeishuizhen.jpg",
+      //       "publishName": null,
+      //       "publishDate": null,
+      //       "status": 1,
+      //       "top": 1,
+      //       "detected": false,
+      //       "createDate": null
+      //   },
+      //   {
+      //       "id": 2,
+      //       "name": "北戴河",
+      //       "context": null,
+      //       "picture": "http://947255bcd7d3.ngrok.io/uploadFile/1590400666793beidaihe.jpg",
+      //       "publishName": null,
+      //       "publishDate": null,
+      //       "status": 1,
+      //       "top": 1,
+      //       "detected": false,
+      //       "createDate": null
+      //   },
+      //   {
+      //       "id": 1,
+      //       "name": "张家口风景秀丽",
+      //       "context": null,
+      //       "picture": "http://947255bcd7d3.ngrok.io/uploadFile/1590400927081zhangjiakou.jpg",
+      //       "publishName": null,
+      //       "publishDate": null,
+      //       "status": 1,
+      //       "top": 1,
+      //       "detected": false,
+      //       "createDate": null
+      //   }
+      // ],
     }
   },
   created() {
@@ -85,6 +86,12 @@ export default {
     }, error => {
         this.$message.error(error)
     })
+  },
+  methods: {
+    toDetail(item) {
+      console.log(item);
+      this.$router.push({name: 'Detail', query: {id: item.id, type: 'sight'}})
+    }
   }
 }
 </script>

@@ -14,9 +14,9 @@
         v-for="(item, index) in tableDate"
         :key="index"
         class="home-pic-list-item"
-        @click="toDetail(index)"
+        @click="toDetail(item)"
       >
-        <img :src="item.imgUrl" alt="">
+        <img :src="item.imgUrl" :alt="item.name">
         <span>{{item.name}}</span>
       </div>
     </div>
@@ -149,21 +149,11 @@ export default {
     }
   },
   created() {
-    this.tableDate = this.tableDateTotal.slice(0,8)
+    // this.tableDate = this.tableDateTotal.slice(0,8)
+    this.getSightList()
   },
   mounted() {
-    this.$api.axios()
-    this.$api.get({
-      url: '/news/getNewsPage',
-      data: {
-        pageIndex: 1,
-        pageSize: 10
-      }
-    }).then(res => {
-      console.log(res,222);
-    }, rej => {
-      console.log(rej, 333);
-    })
+   
     // this.$api.post({
     //   url: '/comment/addComment',
     //   data: {
@@ -180,8 +170,25 @@ export default {
     // })
   },
   methods: {
-    toDetail(index) {
-      this.$router.push({name: 'Detail', query: {index}})
+    toDetail(item) {
+      this.$router.push({name: 'Detail', query: {id: item.id, type: 'sight'}})
+    },
+    getSightList() {
+       this.$api.get({
+        url: '/scenicspot/getNewsPage',
+        data: {
+          pageIndex: 1,
+          pageSize: 10,
+          type: 1
+        }
+      }).then(res => {
+        if (res.success) {
+          this.tableDate = res.data.records.slice(0, 8)
+        }
+        console.log(res,8888888);
+      }, rej => {
+        console.log(rej, 333);
+      })
     }
   }
   
@@ -202,7 +209,7 @@ export default {
     margin auto
     display flex
     flex-wrap wrap
-    justify-content space-between
+    // justify-content space-between
     align-items center
 
     &-item

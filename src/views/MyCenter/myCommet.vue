@@ -7,40 +7,40 @@
       :show-header="true"
       border
       max-height="auto"
-      style="width: 100%"
+      style="width: 98%; margin: 20px auto 0"
       size="small"
     >
       <el-table-column
-        prop="name"
-        label="评论内容"
+        prop="title"
+        label="标题"
         min-width="180"
         :show-overflow-tooltip="false"
         class-name="aa"
       >
-        <template slot-scope="scope">
-            <a :href="scope.row.url"
-              target="_blank"
-              class="buttonText">{{scope.row.name}}</a>
-          </template>
       </el-table-column>
+      <!-- <el-table-column
+        prop="userName"
+        label="留言者"
+        :width="dateColumnWidth"
+        class-name="aa"
+      >
+      </el-table-column> -->
       <el-table-column
-        prop="datePush"
+        prop="createDate"
         label="评论日期"
         :width="dateColumnWidth"
         class-name="aa"
       >
       </el-table-column>
       <el-table-column
-        prop="reply"
-        label="回复内容"
-        min-width="180"
+        label="操作"
+        :width="dateColumnWidth"
         class-name="aa"
       >
-      </el-table-column>
-      <el-table-column
-        prop="replyTime"
-        :width="dateColumnWidth"
-        label="回复时间">
+        <template slot-scope="scope">
+          <el-button @click="handleView(scope.row)" type="text" size="small">查看</el-button>
+          <el-button @click="handleDel(scope.row)" type="text" size="small">删除</el-button>
+        </template>
       </el-table-column>
     </el-table>
   </div>
@@ -156,13 +156,60 @@ export default {
           }
         ],
       show: this.$route.query.show,
-      dateColumnWidth: '90px'
+      dateColumnWidth: 160
     }
   },
   created() {
-    this.tableData = this.tableDateTotal.slice(0, 5)
+    // this.tableData = this.tableDateTotal.slice(0, 5)
+    this.getCommitPage()
+  },
+  methods: {
+    getCommitPage() {
+      this.$api.get({
+        url: '/comment/getCommitPage',
+        data: {
+          pageIndex: 1,
+          pageSize: 20
+        }
+      }).then(res => {
+        if (res.success) {
+          console.log(res, '333333ddddd00ss');
+          this.tableData = res.data.records
+        }
+        console.log(res,444340933);
+      }, rej => {
+        console.log(rej, 333);
+      })
+    },
+    handleView(info) {
+      console.log(info, 'view');
+      this.$router.push({name:'mycommetDetail', query: {id: info.id, modify: false}})
+    },
+    handleDel(info) {
+      console.log(info, 'del');
+      this.$confirm('您确定要删除该留言?', '删除', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning',
+        closeOnClickModal: false
+      }).then(() => {
+        this.$api.get({
+          url: '/comment/delComment',
+          data: {
+            id: info.id
+          }
+        }).then(res => {
+          if (res.success) {
+            this.$message.success('删除成功')
+            this.getCommitPage()
+          }
+        })
+      }).catch(() => {})
+
+    }
   }
 }
+
 </script>
 
 <style lang="stylus" scoped>
