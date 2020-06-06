@@ -1,12 +1,12 @@
 <template>
   <div class="consultant-wrapper">
     <div class="csl-pic">
-      <div class="csl-title">图片咨询</div>
+      <div class="csl-title">景点资讯</div>
       <picture-consultant />
     </div>
 
     <div class="csl-tourist">
-      <div class="csl-title">旅客咨询</div>
+      <div class="csl-title">最新资讯</div>
       <table-consultant />
     </div>
 

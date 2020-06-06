@@ -289,14 +289,14 @@ export default {
       })
     },
     handleSizeChange(pageSize) {
-      console.log(pageSize, 222);
+      // console.log(pageSize, 222);
       this.pageSize = pageSize
-      // this.$router.replace({query: { ...this.query, pageSize, currentPage: 1 }})
+      this.$router.replace({query: { ...this.query, pageSize, currentPage: 1 }})
     },
     handleCurrentChange(currentPage) {
-      console.log(currentPage, 3333);
+      // console.log(currentPage, 3333);
       this.currentPage = currentPage
-      // this.$router.replace({query: { ...this.query, currentPage }})
+      this.$router.replace({query: { ...this.query, currentPage }})
     },
     getStatus (urlStr) {
       var urlStrArr = urlStr.split('/')

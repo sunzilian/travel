@@ -90,7 +90,7 @@ export default {
   methods: {
     toDetail(item) {
       console.log(item);
-      this.$router.push({name: 'Detail', query: {id: item.id, type: 'sight'}})
+      this.$router.push({name: 'Detail', query: {id: item.id, type: 'news'}})
     }
   }
 }

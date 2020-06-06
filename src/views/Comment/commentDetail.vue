@@ -20,10 +20,10 @@
         <el-input style="width: 280px" v-model="commmetInfo.createDate" :disabled="!modify"></el-input>
       </el-form-item>
       <el-form-item label="回复内容" v-if="commmetInfo.answerContext" >
-        <el-input style="width: 700px" v-model="commmetInfo.answerContext" type="textarea"></el-input>
+        <el-input style="width: 700px" v-model="commmetInfo.answerContext" type="textarea" disabled=""></el-input>
       </el-form-item>
       <el-form-item label="回复时间" v-if="commmetInfo.answerDate">
-        <el-input v-model="commmetInfo.answerDate"></el-input>
+        <el-input v-model="commmetInfo.answerDate" disabled></el-input>
       </el-form-item>
     </el-form>
     <div class="detail-footer">

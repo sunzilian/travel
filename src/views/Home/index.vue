@@ -16,7 +16,7 @@
         class="home-pic-list-item"
         @click="toDetail(item)"
       >
-        <img :src="item.imgUrl" :alt="item.name">
+        <img :src="item.picture" :alt="item.name">
         <span>{{item.name}}</span>
       </div>
     </div>

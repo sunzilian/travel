@@ -18,7 +18,7 @@
           autocomplete="off"
         ></el-input>
       </el-form-item>
-      <el-form-item label="用户名" prop="nickName">
+      <el-form-item label="昵称" prop="nickName">
         <el-input
           type="text"
           v-model="registerForm.nickName"
@@ -126,7 +126,8 @@ export default {
         password: '',
         checkPass: '',
         sex: '1',
-        loveList: [
+        loveList: [],
+        loveList1: [
           {
             id: 0,
             name: '风景'
@@ -194,6 +195,7 @@ export default {
         }
       })
     }
+    this.getScenicspotTypeList()
   },
 
   methods: {
@@ -255,7 +257,20 @@ export default {
     },
     handleCancel() {
       this.$router.go(-1)
-    }
+    },
+    getScenicspotTypeList() {
+      this.$api.get({
+        url: '/scenicspotType/getList',
+        data: {}
+      })
+      .then(({success, data}) => {
+        console.log(data);
+        if (success) {
+          this.$set(this.registerForm, 'loveList', data)
+          // this.resortKeysList = data;
+        }
+      })
+    },
   }
 };
 </script>
